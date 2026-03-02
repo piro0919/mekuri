@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mekuri</title>
+    <style>
+      :root {
+        --bg-main: #1A1A1E;
+        --bg-sidebar: #222226;
+        --bg-card: #2C2C30;
+        --bg-elevated: #3A3A3E;
+
+        --text-primary: #F0F0F2;
+        --text-secondary: #98989D;
+        --text-tertiary: #636366;
+
+        --border-color: #38383A;
+        --divider: #2C2C30;
+
+        --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+
+        --bg-hover: rgba(255,255,255,0.08);
+        --primary: #0A84FF;
+        --primary-hover: #409CFF;
+
+        --scrollbar-thumb: rgba(255,255,255,0.15);
+        --scrollbar-thumb-hover: rgba(255,255,255,0.25);
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        background: var(--bg-main);
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+        color: var(--text-primary);
+        overflow: hidden;
+        user-select: none;
+      }
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

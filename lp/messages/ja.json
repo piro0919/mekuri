@@ -1,0 +1,49 @@
+{
+  "Metadata": {
+    "title": "Mekuri",
+    "description": "macOS向けの軽量ローカル漫画・コミックリーダー。CBZ、CBR、画像フォルダに対応。"
+  },
+  "Hero": {
+    "tagline": "漫画を、美しく読む。",
+    "description": "MekuriはmacOS向けの軽量コミックリーダーです。CBZ・CBRアーカイブや画像フォルダを開いて、集中できる読書体験を。",
+    "download": "macOS版をダウンロード",
+    "viewOnGithub": "GitHubで見る"
+  },
+  "Features": {
+    "title": "機能",
+    "formats": {
+      "title": "CBZ・CBR・フォルダ対応",
+      "description": "ZIP/CBZアーカイブ、RAR/CBRアーカイブ、画像フォルダに対応。ローカルのコミックをひとつのリーダーで。"
+    },
+    "spread": {
+      "title": "見開き表示",
+      "description": "単ページと見開きモードを切り替え可能。横長の画像は自動的にフル幅で表示されます。"
+    },
+    "rtl": {
+      "title": "右綴じ・左綴じ",
+      "description": "右から左、左から右の読み方向を切り替え。日本の漫画向けに右綴じがデフォルト。"
+    },
+    "keyboard": {
+      "title": "キーボード＆トラックパッド",
+      "description": "矢印キー、クリック、トラックパッドスワイプで操作。Fキーでフルスクリーン。"
+    },
+    "privacy": {
+      "title": "プライバシー重視",
+      "description": "すべてのファイルはMac内に留まります。アカウント登録不要、サーバー通信なし、トラッキングなし。"
+    },
+    "lightweight": {
+      "title": "軽量設計",
+      "description": "Tauriで構築し、リソース消費を最小限に。小さなダウンロードサイズ、高速起動、低メモリ使用量。"
+    }
+  },
+  "CTA": {
+    "title": "数秒で読み始められます。",
+    "description": "Mekuriをダウンロードして、コミックをドロップするだけ。無料でオープンソース。",
+    "download": "Mekuriをダウンロード"
+  },
+  "Footer": {
+    "madeBy": "Made by",
+    "openSource": "GitHubでオープンソース公開中",
+    "buyMeACoffee": "Buy Me a Coffee"
+  }
+}

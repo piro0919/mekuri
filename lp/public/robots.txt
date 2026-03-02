@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://mekuri.kkweb.io
+
+# Sitemaps
+Sitemap: https://mekuri.kkweb.io/sitemap.xml

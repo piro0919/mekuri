@@ -1,0 +1,49 @@
+{
+  "Metadata": {
+    "title": "Mekuri",
+    "description": "A lightweight local comic and manga reader for macOS. Open CBZ, CBR, and image folders."
+  },
+  "Hero": {
+    "tagline": "Your comics, beautifully read.",
+    "description": "Mekuri is a lightweight macOS app for reading local comics and manga. Open CBZ, CBR archives or image folders and enjoy a distraction-free reading experience.",
+    "download": "Download for macOS",
+    "viewOnGithub": "View on GitHub"
+  },
+  "Features": {
+    "title": "Features",
+    "formats": {
+      "title": "CBZ, CBR & Folders",
+      "description": "Open ZIP/CBZ archives, RAR/CBR archives, and image folders. All your local comics in one reader."
+    },
+    "spread": {
+      "title": "Spread View",
+      "description": "Read in single or two-page spread mode. Landscape pages are automatically displayed full-width."
+    },
+    "rtl": {
+      "title": "RTL & LTR",
+      "description": "Switch between right-to-left and left-to-right reading direction. RTL is default for Japanese manga."
+    },
+    "keyboard": {
+      "title": "Keyboard & Trackpad",
+      "description": "Navigate with arrow keys, click zones, or trackpad swipe. Press F for fullscreen."
+    },
+    "privacy": {
+      "title": "Privacy First",
+      "description": "All files stay on your Mac. No accounts, no servers, no tracking. Your library is yours alone."
+    },
+    "lightweight": {
+      "title": "Lightweight",
+      "description": "Built with Tauri for minimal resource usage. Small download, fast startup, low memory footprint."
+    }
+  },
+  "CTA": {
+    "title": "Start reading in seconds.",
+    "description": "Download Mekuri, drop in your comics, and enjoy. Free and open source.",
+    "download": "Download Mekuri"
+  },
+  "Footer": {
+    "madeBy": "Made by",
+    "openSource": "Open Source on GitHub",
+    "buyMeACoffee": "Buy Me a Coffee"
+  }
+}

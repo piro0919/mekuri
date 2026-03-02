@@ -4,10 +4,26 @@
     "description": "A lightweight local comic and manga reader for macOS. Open CBZ, CBR, and image folders."
   },
   "Hero": {
+    "badge": "macOS Comic Reader",
     "tagline": "Your comics, beautifully read.",
     "description": "Mekuri is a lightweight macOS app for reading local comics and manga. Open CBZ, CBR archives or image folders and enjoy a distraction-free reading experience.",
     "download": "Download for macOS",
     "viewOnGithub": "View on GitHub"
+  },
+  "HowItWorks": {
+    "title": "How It Works",
+    "step1": {
+      "title": "Open or Drop",
+      "description": "Drag & drop a CBZ, CBR file or image folder onto Mekuri. That's it."
+    },
+    "step2": {
+      "title": "Read Your Way",
+      "description": "Single page, spread view, RTL or LTR — customize to match your reading style."
+    },
+    "step3": {
+      "title": "Navigate Freely",
+      "description": "Arrow keys, click, trackpad swipe, or the page slider. Full keyboard control."
+    }
   },
   "Features": {
     "title": "Features",

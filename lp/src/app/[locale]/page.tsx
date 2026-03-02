@@ -1,12 +1,17 @@
 import {
-  BookOpen,
+  ArrowLeftRight,
   Coffee,
   Columns2,
   Download,
   Feather,
+  FileArchive,
+  FolderOpen,
   Github,
+  Hand,
   Keyboard,
+  Monitor,
   ShieldCheck,
+  SlidersHorizontal,
 } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
@@ -17,12 +22,18 @@ const RELEASE_URL = "https://github.com/piro0919/mekuri/releases/latest";
 const COFFEE_URL = "https://buymeacoffee.com/piro0919";
 
 const FEATURES = [
-  { key: "formats" as const, icon: BookOpen },
+  { key: "formats" as const, icon: FileArchive },
   { key: "spread" as const, icon: Columns2 },
-  { key: "rtl" as const, icon: BookOpen },
+  { key: "rtl" as const, icon: ArrowLeftRight },
   { key: "keyboard" as const, icon: Keyboard },
   { key: "privacy" as const, icon: ShieldCheck },
   { key: "lightweight" as const, icon: Feather },
+];
+
+const STEPS = [
+  { key: "step1" as const, icon: FolderOpen, step: "01" },
+  { key: "step2" as const, icon: SlidersHorizontal, step: "02" },
+  { key: "step3" as const, icon: Hand, step: "03" },
 ];
 
 export default function Page(): ReactNode {
@@ -31,9 +42,9 @@ export default function Page(): ReactNode {
   return (
     <main className="min-h-dvh">
       {/* Hero */}
-      <section className="relative px-6 pt-20 pb-24 text-center">
+      <section className="relative px-6 pt-20 pb-28 text-center">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute top-[-200px] left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-accent/8 blur-[120px]" />
+          <div className="absolute top-[-200px] left-1/2 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-accent/10 blur-[150px]" />
         </div>
         <div className="relative mx-auto max-w-2xl">
           <Image
@@ -45,8 +56,8 @@ export default function Page(): ReactNode {
             priority
           />
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm font-medium text-accent">
-            <BookOpen size={16} strokeWidth={1.75} />
-            macOS Comic Reader
+            <Monitor size={16} strokeWidth={1.75} />
+            {t("Hero.badge")}
           </div>
           <h1 className="mb-3 text-5xl font-bold tracking-tight text-text-1 sm:text-6xl">
             Mekuri
@@ -72,6 +83,34 @@ export default function Page(): ReactNode {
               <Github size={18} strokeWidth={2} />
               {t("Hero.viewOnGithub")}
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="relative px-6 py-20">
+        <div className="pointer-events-none absolute inset-0 bg-bg-elevated" />
+        <div className="relative mx-auto max-w-4xl">
+          <h2 className="mb-14 text-center text-sm font-semibold tracking-widest text-text-3 uppercase">
+            {t("HowItWorks.title")}
+          </h2>
+          <div className="grid gap-8 sm:grid-cols-3">
+            {STEPS.map(({ key, icon: Icon, step }) => (
+              <div key={key} className="text-center">
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10">
+                  <Icon size={24} strokeWidth={1.75} className="text-accent" />
+                </div>
+                <span className="mb-2 block font-mono text-xs font-bold tracking-wider text-text-3">
+                  STEP {step}
+                </span>
+                <h3 className="mb-2 text-lg font-semibold text-text-1">
+                  {t(`HowItWorks.${key}.title`)}
+                </h3>
+                <p className="text-sm leading-relaxed text-text-2">
+                  {t(`HowItWorks.${key}.description`)}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -104,8 +143,11 @@ export default function Page(): ReactNode {
       </section>
 
       {/* CTA */}
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-xl text-center">
+      <section className="relative px-6 py-24">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute bottom-[-100px] left-1/2 h-[400px] w-[700px] -translate-x-1/2 rounded-full bg-accent/8 blur-[120px]" />
+        </div>
+        <div className="relative mx-auto max-w-xl text-center">
           <h2 className="mb-3 text-3xl font-bold tracking-tight text-text-1">
             {t("CTA.title")}
           </h2>

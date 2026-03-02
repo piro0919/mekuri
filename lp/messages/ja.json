@@ -4,10 +4,26 @@
     "description": "macOS向けの軽量ローカル漫画・コミックリーダー。CBZ、CBR、画像フォルダに対応。"
   },
   "Hero": {
+    "badge": "macOS コミックリーダー",
     "tagline": "漫画を、美しく読む。",
     "description": "MekuriはmacOS向けの軽量コミックリーダーです。CBZ・CBRアーカイブや画像フォルダを開いて、集中できる読書体験を。",
     "download": "macOS版をダウンロード",
     "viewOnGithub": "GitHubで見る"
+  },
+  "HowItWorks": {
+    "title": "使い方",
+    "step1": {
+      "title": "開く or ドロップ",
+      "description": "CBZ・CBRファイルや画像フォルダをMekuriにドラッグ＆ドロップするだけ。"
+    },
+    "step2": {
+      "title": "好みのスタイルで",
+      "description": "単ページ・見開き・右綴じ・左綴じ — 自分の読み方に合わせてカスタマイズ。"
+    },
+    "step3": {
+      "title": "自由にナビゲート",
+      "description": "矢印キー、クリック、トラックパッドスワイプ、ページスライダー。フルキーボード操作対応。"
+    }
   },
   "Features": {
     "title": "機能",

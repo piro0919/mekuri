@@ -6,3 +6,6 @@ src-tauri/gen/
 .DS_Store
 lp/.next/
 lp/.vercel/
+.claude/
+image.png
+image_transparent.png

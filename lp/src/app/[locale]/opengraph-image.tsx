@@ -21,7 +21,7 @@ export default async function OgImage({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+        background: "linear-gradient(135deg, #0a0a0b 0%, #1c1c21 50%, #2d1b69 100%)",
         gap: 24,
       }}
     >
@@ -37,7 +37,7 @@ export default async function OgImage({
         style={{
           fontSize: 64,
           fontWeight: 700,
-          color: "#fff",
+          color: "#f0f0f3",
           letterSpacing: "-1px",
         }}
       >
@@ -46,7 +46,7 @@ export default async function OgImage({
       <div
         style={{
           fontSize: 28,
-          color: "rgba(255,255,255,0.85)",
+          color: "rgba(240,240,243,0.7)",
           maxWidth: 700,
           textAlign: "center",
         }}

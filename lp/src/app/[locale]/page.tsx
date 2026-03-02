@@ -31,40 +31,43 @@ export default function Page(): ReactNode {
   return (
     <main className="min-h-dvh">
       {/* Hero */}
-      <section className="px-6 pt-16 pb-20 text-center">
-        <div className="mx-auto max-w-2xl">
+      <section className="relative px-6 pt-20 pb-24 text-center">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute top-[-200px] left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-accent/8 blur-[120px]" />
+        </div>
+        <div className="relative mx-auto max-w-2xl">
           <Image
             src="/icon.png"
             alt="Mekuri"
-            width={128}
-            height={128}
-            className="mx-auto mb-6 rounded-[24px] drop-shadow-xl"
+            width={120}
+            height={120}
+            className="mx-auto mb-8 rounded-[24px] shadow-2xl shadow-accent/20"
             priority
           />
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-apple-blue/10 px-4 py-1.5 text-sm font-medium text-apple-blue">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm font-medium text-accent">
             <BookOpen size={16} strokeWidth={1.75} />
             macOS Comic Reader
           </div>
-          <h1 className="mb-2 text-5xl font-bold tracking-tight text-apple-gray-1 sm:text-6xl">
+          <h1 className="mb-3 text-5xl font-bold tracking-tight text-text-1 sm:text-6xl">
             Mekuri
           </h1>
-          <p className="mb-4 text-xl font-medium text-apple-gray-2 sm:text-2xl">
+          <p className="mb-4 text-xl font-medium text-text-2 sm:text-2xl">
             {t("Hero.tagline")}
           </p>
-          <p className="mx-auto mb-10 max-w-lg text-base leading-relaxed text-apple-gray-3">
+          <p className="mx-auto mb-10 max-w-lg text-base leading-relaxed text-text-3">
             {t("Hero.description")}
           </p>
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
               href={RELEASE_URL}
-              className="inline-flex items-center gap-2 rounded-xl bg-apple-blue px-6 py-3 text-base font-semibold text-white shadow-lg shadow-apple-blue/25 transition-all hover:-translate-y-0.5 hover:bg-apple-blue-dark hover:shadow-xl hover:shadow-apple-blue/30"
+              className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-base font-semibold text-white shadow-lg shadow-accent/25 transition-all hover:-translate-y-0.5 hover:bg-accent-dark hover:shadow-xl hover:shadow-accent/30"
             >
               <Download size={18} strokeWidth={2} />
               {t("Hero.download")}
             </a>
             <a
               href={GITHUB_URL}
-              className="inline-flex items-center gap-2 rounded-xl border border-apple-gray-4 bg-apple-card px-6 py-3 text-base font-semibold text-apple-gray-1 transition-all hover:-translate-y-0.5 hover:shadow-md"
+              className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-6 py-3 text-base font-semibold text-text-1 transition-all hover:-translate-y-0.5 hover:border-text-3 hover:shadow-md hover:shadow-black/20"
             >
               <Github size={18} strokeWidth={2} />
               {t("Hero.viewOnGithub")}
@@ -76,22 +79,22 @@ export default function Page(): ReactNode {
       {/* Features */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-5xl">
-          <h2 className="mb-12 text-center text-sm font-semibold tracking-widest text-apple-gray-3 uppercase">
+          <h2 className="mb-12 text-center text-sm font-semibold tracking-widest text-text-3 uppercase">
             {t("Features.title")}
           </h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {FEATURES.map(({ key, icon: Icon }) => (
               <div
                 key={key}
-                className="rounded-2xl border border-apple-gray-4/60 bg-apple-card p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                className="rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-0.5 hover:border-text-3 hover:shadow-lg hover:shadow-black/20"
               >
-                <div className="mb-4 inline-flex rounded-xl bg-apple-blue/10 p-2.5">
-                  <Icon size={20} strokeWidth={1.75} className="text-apple-blue" />
+                <div className="mb-4 inline-flex rounded-xl bg-accent/10 p-2.5">
+                  <Icon size={20} strokeWidth={1.75} className="text-accent" />
                 </div>
-                <h3 className="mb-2 text-base font-semibold text-apple-gray-1">
+                <h3 className="mb-2 text-base font-semibold text-text-1">
                   {t(`Features.${key}.title`)}
                 </h3>
-                <p className="text-sm leading-relaxed text-apple-gray-2">
+                <p className="text-sm leading-relaxed text-text-2">
                   {t(`Features.${key}.description`)}
                 </p>
               </div>
@@ -103,13 +106,13 @@ export default function Page(): ReactNode {
       {/* CTA */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-xl text-center">
-          <h2 className="mb-3 text-3xl font-bold tracking-tight text-apple-gray-1">
+          <h2 className="mb-3 text-3xl font-bold tracking-tight text-text-1">
             {t("CTA.title")}
           </h2>
-          <p className="mb-8 text-base text-apple-gray-2">{t("CTA.description")}</p>
+          <p className="mb-8 text-base text-text-2">{t("CTA.description")}</p>
           <a
             href={RELEASE_URL}
-            className="inline-flex items-center gap-2 rounded-xl bg-apple-blue px-6 py-3 text-base font-semibold text-white shadow-lg shadow-apple-blue/25 transition-all hover:-translate-y-0.5 hover:bg-apple-blue-dark hover:shadow-xl hover:shadow-apple-blue/30"
+            className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-base font-semibold text-white shadow-lg shadow-accent/25 transition-all hover:-translate-y-0.5 hover:bg-accent-dark hover:shadow-xl hover:shadow-accent/30"
           >
             <Download size={18} strokeWidth={2} />
             {t("CTA.download")}
@@ -118,13 +121,13 @@ export default function Page(): ReactNode {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-apple-gray-4/60 px-6 py-8">
+      <footer className="border-t border-border px-6 py-8">
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 sm:flex-row sm:justify-between">
-          <span className="text-sm text-apple-gray-3">
+          <span className="text-sm text-text-3">
             {t("Footer.madeBy")}{" "}
             <a
               href={GITHUB_URL}
-              className="font-medium text-apple-gray-2 transition-colors hover:text-apple-blue"
+              className="font-medium text-text-2 transition-colors hover:text-accent"
             >
               piro0919
             </a>
@@ -132,14 +135,14 @@ export default function Page(): ReactNode {
           <div className="flex items-center gap-5">
             <a
               href={GITHUB_URL}
-              className="inline-flex items-center gap-1.5 text-sm text-apple-gray-3 transition-colors hover:text-apple-blue"
+              className="inline-flex items-center gap-1.5 text-sm text-text-3 transition-colors hover:text-accent"
             >
               <Github size={14} strokeWidth={1.75} />
               {t("Footer.openSource")}
             </a>
             <a
               href={COFFEE_URL}
-              className="inline-flex items-center gap-1.5 text-sm text-apple-gray-3 transition-colors hover:text-apple-blue"
+              className="inline-flex items-center gap-1.5 text-sm text-text-3 transition-colors hover:text-accent"
             >
               <Coffee size={14} strokeWidth={1.75} />
               {t("Footer.buyMeACoffee")}

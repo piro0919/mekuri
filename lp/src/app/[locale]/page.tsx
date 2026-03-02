@@ -50,9 +50,9 @@ export default function Page(): ReactNode {
           <Image
             src="/icon.png"
             alt="Mekuri"
-            width={120}
-            height={120}
-            className="mx-auto mb-8 rounded-[24px] shadow-2xl shadow-accent/20"
+            width={160}
+            height={160}
+            className="mx-auto mb-8 rounded-[28px] shadow-2xl shadow-accent/20"
             priority
           />
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm font-medium text-accent">

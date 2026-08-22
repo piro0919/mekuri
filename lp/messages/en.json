@@ -60,6 +60,35 @@
   "Footer": {
     "madeBy": "Made by",
     "openSource": "Open Source on GitHub",
-    "buyMeACoffee": "Buy Me a Coffee"
+    "buyMeACoffee": "Buy Me a Coffee",
+    "privacy": "Privacy"
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "updated": "Last updated: August 22, 2026",
+    "intro": "Mekuri opens comics that are already on your Mac and shows them. That's the whole app. There is no server behind it, no analytics, and no account.",
+    "sections": [
+      {
+        "title": "Your files stay where they are",
+        "body": "Archives and image folders are read from disk and rendered locally. Nothing is copied anywhere, nothing is uploaded, and no filename, path, or page you opened is reported to anyone. There is nowhere for any of it to go."
+      },
+      {
+        "title": "Update checks go to GitHub",
+        "body": "The app checks for new versions by fetching a small file from its GitHub Releases page. GitHub sees the request the way it sees any download, including your IP address, and that is covered by GitHub's privacy policy. Nothing about your library is included."
+      },
+      {
+        "title": "No analytics, ever",
+        "body": "There is no crash reporting, no usage tracking, no unique identifier, and no third-party SDK of any kind in the app."
+      },
+      {
+        "title": "You can check all of this",
+        "body": "Mekuri is open source under the MIT license, so none of the above has to be taken on trust. Read the source, or open an issue if something looks wrong."
+      },
+      {
+        "title": "Changes",
+        "body": "If a future version starts doing something new with your data, this page gets updated before that version ships."
+      }
+    ],
+    "back": "Back to Mekuri"
   }
 }

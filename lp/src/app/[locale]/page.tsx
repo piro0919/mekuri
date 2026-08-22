@@ -62,13 +62,13 @@ export default async function Page({ params }: PageProps): Promise<ReactNode> {
                 </span>
               ))}
             </div>
-            <h1 className="text-6xl leading-[0.9] font-bold tracking-[-0.03em] text-text-1 sm:text-7xl lg:text-8xl">
+            <h1 className="font-display text-6xl leading-[0.9] font-bold tracking-[-0.03em] text-text-1 sm:text-7xl lg:text-8xl">
               Mekuri
             </h1>
             <p className="mt-4 font-mono text-base tracking-[0.5em] text-accent">
               {t("Hero.kana")}
             </p>
-            <p className="mt-8 max-w-md text-2xl leading-snug font-medium text-text-1">
+            <p className="mt-8 max-w-md font-display text-2xl leading-snug font-medium text-text-1">
               {t("Hero.tagline")}
             </p>
             <p className="mt-4 max-w-md text-base leading-relaxed text-text-2">
@@ -125,7 +125,7 @@ export default async function Page({ params }: PageProps): Promise<ReactNode> {
                     strokeWidth={1.75}
                   />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold text-text-1">
+                <h3 className="mb-2 font-display text-lg font-semibold text-text-1">
                   {t(`HowItWorks.${key}.title`)}
                 </h3>
                 <p className="text-sm leading-relaxed text-text-2">
@@ -169,7 +169,7 @@ export default async function Page({ params }: PageProps): Promise<ReactNode> {
       {/* CTA */}
       <section className="bg-rule px-6 py-24 text-bg">
         <div className="mx-auto max-w-2xl">
-          <h2 className="text-4xl leading-tight font-bold tracking-tight">
+          <h2 className="font-display text-4xl leading-tight font-bold tracking-tight">
             {t("CTA.title")}
           </h2>
           <p className="mt-4 text-base text-bg/70">{t("CTA.description")}</p>

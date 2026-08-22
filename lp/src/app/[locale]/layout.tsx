@@ -1,6 +1,6 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Zen_Kaku_Gothic_New } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -16,6 +16,18 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
+});
+
+/* 見出しの書体。誌面の見出しに近い太さの日本語ゴシックを当てる。
+   本文は Geist のままで、太さの差を見出しだけに置く */
+const displayFont = Zen_Kaku_Gothic_New({
+  display: "swap",
+  // 日本語は unicode-range で百件以上に割れている。preload を切らないと
+  // 使わない範囲まで先読みして 1ページで 1.5MB 取りに行く
+  preload: false,
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["500", "900"],
 });
 
 export function generateStaticParams(): { locale: string }[] {
@@ -89,7 +101,9 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning={true}>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${displayFont.variable} antialiased`}
+      >
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
         <Analytics />
       </body>

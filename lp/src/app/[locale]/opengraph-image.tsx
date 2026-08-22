@@ -4,6 +4,12 @@ export const alt = "Mekuri";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+const INK = "#17130e";
+const PAPER = "#f2ede1";
+const SHEET = "#fbf8f1";
+const TONE = "#e7e2d6";
+const ACCENT = "#c8452f";
+
 export default async function OgImage({
   params,
 }: {
@@ -15,45 +21,161 @@ export default async function OgImage({
   return new ImageResponse(
     <div
       style={{
-        width: "100%",
-        height: "100%",
+        background: PAPER,
         display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "linear-gradient(135deg, #0a0a0b 0%, #1c1c21 50%, #2d1b69 100%)",
-        gap: 24,
+        height: "100%",
+        width: "100%",
       }}
     >
-      {/* biome-ignore lint/performance/noImgElement: next/image not available in ImageResponse */}
-      <img
-        alt="Mekuri"
-        src="https://mekuri.kkweb.io/icon.png"
-        width={160}
-        height={160}
-        style={{ borderRadius: 32 }}
-      />
       <div
         style={{
-          fontSize: 64,
-          fontWeight: 700,
-          color: "#f0f0f3",
-          letterSpacing: "-1px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          padding: "0 64px",
+          width: 660,
         }}
       >
-        Mekuri
+        <div style={{ display: "flex", gap: 10 }}>
+          {["CBZ", "CBR", isJa ? "画像フォルダ" : "IMAGE FOLDERS"].map(
+            (chip) => (
+              <div
+                key={chip}
+                style={{
+                  border: `2px solid ${INK}`,
+                  color: INK,
+                  fontSize: 18,
+                  letterSpacing: 2,
+                  padding: "6px 14px",
+                }}
+              >
+                {chip}
+              </div>
+            ),
+          )}
+        </div>
+        <div
+          style={{
+            color: INK,
+            fontSize: 132,
+            fontWeight: 700,
+            letterSpacing: -4,
+            marginTop: 28,
+          }}
+        >
+          Mekuri
+        </div>
+        <div
+          style={{
+            color: ACCENT,
+            fontSize: 26,
+            letterSpacing: 14,
+            marginTop: 4,
+          }}
+        >
+          メクリ
+        </div>
+        <div
+          style={{
+            color: INK,
+            fontSize: 36,
+            fontWeight: 500,
+            marginTop: 34,
+          }}
+        >
+          {isJa ? "漫画を、美しく読む。" : "Your comics, beautifully read."}
+        </div>
+        <div style={{ color: "#4a4239", fontSize: 24, marginTop: 14 }}>
+          {isJa ? "macOS コミックリーダー" : "macOS comic reader"}
+        </div>
       </div>
-      <div
-        style={{
-          fontSize: 28,
-          color: "rgba(240,240,243,0.7)",
-          maxWidth: 700,
-          textAlign: "center",
-        }}
-      >
-        {isJa
-          ? "漫画を、美しく読む。macOSコミックリーダー。"
-          : "Your comics, beautifully read. macOS comic reader."}
+
+      {/* 誌面。右端で裁ち落とす */}
+      <div style={{ display: "flex", overflow: "hidden", width: 540 }}>
+        <div
+          style={{
+            background: SHEET,
+            border: `4px solid ${INK}`,
+            display: "flex",
+            height: 470,
+            marginTop: 80,
+            padding: 20,
+            transform: "rotate(-2deg)",
+            width: 600,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 18,
+              width: 250,
+            }}
+          >
+            <div
+              style={{
+                background: TONE,
+                border: `4px solid ${INK}`,
+                height: 150,
+              }}
+            />
+            <div
+              style={{
+                border: `4px solid ${INK}`,
+                display: "flex",
+                flex: 1,
+                gap: 18,
+              }}
+            />
+          </div>
+          <div style={{ background: INK, margin: "0 16px", width: 4 }} />
+          <div
+            style={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "column",
+              gap: 18,
+            }}
+          >
+            <div
+              style={{
+                border: `4px solid ${INK}`,
+                height: 110,
+              }}
+            />
+            <div
+              style={{
+                alignItems: "center",
+                border: `4px solid ${INK}`,
+                display: "flex",
+                flex: 1,
+                justifyContent: "center",
+                overflow: "hidden",
+              }}
+            >
+              {Array.from({ length: 14 }, (_, i) => (
+                <div
+                  key={i}
+                  style={{
+                    background: INK,
+                    height: 420,
+                    position: "absolute",
+                    transform: `rotate(${(i * 180) / 14}deg)`,
+                    width: 3,
+                  }}
+                />
+              ))}
+              <div
+                style={{
+                  background: ACCENT,
+                  borderRadius: 999,
+                  height: 68,
+                  width: 68,
+                }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>,
     { ...size },

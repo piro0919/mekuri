@@ -1,15 +1,18 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-accent: #818cf8;
-  --color-accent-dark: #6366f1;
-  --color-bg: #0a0a0b;
-  --color-bg-elevated: #141417;
-  --color-card: #1c1c21;
-  --color-border: #2a2a32;
-  --color-text-1: #f0f0f3;
-  --color-text-2: #a0a0ab;
-  --color-text-3: #6b6b78;
+  /* 紙と墨。暗い背景のテンプレから外すために、地は生成り、文字は墨、
+     差し色は朱にしている */
+  --color-accent: #c8452f;
+  --color-accent-dark: #a63724;
+  --color-bg: #f2ede1;
+  --color-bg-elevated: #e9e2d2;
+  --color-card: #fbf8f1;
+  --color-border: #d5cbb6;
+  --color-rule: #17130e;
+  --color-text-1: #17130e;
+  --color-text-2: #4a4239;
+  --color-text-3: #7c7161;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

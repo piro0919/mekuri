@@ -8,7 +8,9 @@
     "tagline": "漫画を、美しく読む。",
     "description": "MekuriはmacOS向けの軽量コミックリーダーです。CBZ・CBRアーカイブや画像フォルダを開いて、集中できる読書体験を。",
     "download": "macOS版をダウンロード",
-    "viewOnGithub": "GitHubで見る"
+    "viewOnGithub": "GitHubで見る",
+    "kana": "メクリ",
+    "chipFolder": "画像フォルダ"
   },
   "HowItWorks": {
     "title": "使い方",

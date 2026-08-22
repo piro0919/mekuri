@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* 紙と墨。暗い背景のテンプレから外すために、地は生成り、文字は墨、
-     差し色は朱にしている */
+  /* 色はアプリのアイコンから取る。黒の地に白銀の誌面、差し色は朱。
+     読んでいる最中の画面と同じで、暗い面に紙だけが光る */
   --color-accent: #c8452f;
   --color-accent-dark: #a63724;
-  --color-bg: #f2ede1;
-  --color-bg-elevated: #e9e2d2;
-  --color-card: #fbf8f1;
-  --color-border: #d5cbb6;
-  --color-rule: #17130e;
-  --color-text-1: #17130e;
-  --color-text-2: #4a4239;
-  --color-text-3: #7c7161;
+  --color-bg: #0f0f10;
+  --color-bg-elevated: #17171a;
+  --color-card: #1c1c20;
+  --color-border: #2c2c33;
+  --color-rule: #f2ede1;
+  --color-text-1: #f4f1ea;
+  --color-text-2: #b6b0a4;
+  --color-text-3: #8a8478;
   --font-sans: var(--font-geist-sans);
   --font-display: var(--font-display);
   --font-mono: var(--font-geist-mono);

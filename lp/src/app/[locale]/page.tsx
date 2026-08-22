@@ -49,7 +49,7 @@ export default async function Page({ params }: PageProps): Promise<ReactNode> {
   return (
     <main className="min-h-dvh">
       {/* Hero */}
-      <section className="overflow-hidden border-b-2 border-rule">
+      <section className="overflow-hidden border-b border-border">
         <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 pt-16 pb-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-8 lg:pt-24 lg:pb-28">
           <div className="min-w-0">
             <div className="mb-8 flex flex-wrap items-center gap-2">
@@ -104,7 +104,7 @@ export default async function Page({ params }: PageProps): Promise<ReactNode> {
       </section>
 
       {/* How It Works */}
-      <section className="border-b-2 border-rule px-6 py-20">
+      <section className="border-b border-border px-6 py-20">
         <div className="mx-auto max-w-5xl">
           <h2 className="mb-12 font-mono text-xs font-semibold tracking-wider text-accent">
             {t("HowItWorks.title")}

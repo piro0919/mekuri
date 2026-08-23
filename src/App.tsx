@@ -1,3 +1,4 @@
+import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { getCurrentWebview } from "@tauri-apps/api/webview";
 import { open } from "@tauri-apps/plugin-dialog";
@@ -57,6 +58,22 @@ function App() {
 		}
 	}, [comic.load, settings.addRecentFile]);
 
+	// A comic handed over by macOS: a double-click in Finder, a drop on the
+	// Dock icon, or `open -a Mekuri comic.cbz`. Rust parks the path and we
+	// take it, so the same comic never arrives twice.
+	const takePendingOpen = useCallback(async () => {
+		const path = await invoke<null | string>("take_pending_open");
+		if (!path) return;
+
+		await comic.load(path);
+		const name =
+			path
+				.split("/")
+				.pop()
+				?.replace(/\.[^.]+$/, "") ?? "Unknown";
+		settings.addRecentFile(path, name);
+	}, [comic.load, settings.addRecentFile]);
+
 	const handleOpenRecent = useCallback(
 		async (file: RecentFile) => {
 			await comic.load(file.path, file.lastPage);
@@ -71,6 +88,20 @@ function App() {
 			settings.updateLastPage(comic.filePath, comic.currentPage);
 		}
 	}, [comic.currentPage, comic.filePath, settings.updateLastPage]);
+
+	// Launched by opening a comic: the path was waiting before this
+	// component existed, so collect it once on mount as well as on the
+	// event, which only fires while the app is already running.
+	useEffect(() => {
+		takePendingOpen();
+
+		const unlisten = listen("open-pending", () => {
+			takePendingOpen();
+		});
+		return () => {
+			unlisten.then((fn) => fn());
+		};
+	}, [takePendingOpen]);
 
 	// Menu event listener
 	useEffect(() => {

@@ -1,10 +1,24 @@
 use std::path::Path;
+use std::sync::Mutex;
 use tauri::menu::{Menu, MenuItem, PredefinedMenuItem, Submenu};
 use tauri::Emitter;
 use tauri_plugin_dialog::{DialogExt, MessageDialogButtons};
 use tauri_plugin_updater::UpdaterExt;
 
 mod archive;
+
+/// A comic macOS handed over — a double-click, a drop on the Dock icon, or
+/// `open -a Mekuri comic.cbz`. Held here rather than pushed straight to the
+/// webview because launching this way delivers the path while the frontend
+/// is still starting up and has nobody listening yet. The webview asks for
+/// it on mount and again whenever `open-pending` fires, and taking it
+/// clears it, so a comic is never opened twice.
+static PENDING_OPEN: Mutex<Option<String>> = Mutex::new(None);
+
+#[tauri::command]
+fn take_pending_open() -> Option<String> {
+    PENDING_OPEN.lock().ok()?.take()
+}
 
 #[tauri::command]
 fn open_comic_meta(path: String) -> Result<archive::ComicMeta, String> {
@@ -208,7 +222,30 @@ pub fn run() {
             });
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![open_comic_meta, get_page])
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .invoke_handler(tauri::generate_handler![
+            open_comic_meta,
+            get_page,
+            take_pending_open
+        ])
+        .build(tauri::generate_context!())
+        .expect("error while running tauri application")
+        .run(|app, event| {
+            // macOS delivers files opened from outside the app here, both
+            // at launch and while it is already running.
+            if let tauri::RunEvent::Opened { urls } = event {
+                let Some(path) = urls
+                    .iter()
+                    .filter_map(|url| url.to_file_path().ok())
+                    .find_map(|path| path.to_str().map(str::to_owned))
+                else {
+                    return;
+                };
+                if let Ok(mut pending) = PENDING_OPEN.lock() {
+                    *pending = Some(path);
+                }
+                // Only a nudge — the path itself travels through
+                // `take_pending_open` so there is one consumer either way.
+                let _ = app.emit("open-pending", ());
+            }
+        });
 }

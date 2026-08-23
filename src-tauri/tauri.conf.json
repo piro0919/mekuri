@@ -33,6 +33,14 @@
       "icons/128x128@2x.png",
       "icons/icon.icns"
     ],
+    "fileAssociations": [
+      {
+        "ext": ["cbz", "cbr"],
+        "name": "Comic Archive",
+        "description": "Comic book archive",
+        "role": "Viewer"
+      }
+    ],
     "macOS": {
       "minimumSystemVersion": "14.0"
     }

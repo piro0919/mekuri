@@ -1,4 +1,3 @@
-import Image from "next/image";
 import {
   ArrowLeftRight,
   Coffee,
@@ -7,16 +6,16 @@ import {
   Feather,
   FileArchive,
   FolderOpen,
-  Github,
   Hand,
   Keyboard,
-  Shield,
+  Monitor,
   ShieldCheck,
   SlidersHorizontal,
 } from "lucide-react";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import Image from "next/image";
+import { GithubMark } from "@/components/GithubMark";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
-import { Link } from "@/i18n/navigation";
 
 const GITHUB_URL = "https://github.com/piro0919/mekuri";
 const RELEASE_URL = "https://github.com/piro0919/mekuri/releases/latest";
@@ -37,102 +36,74 @@ const STEPS = [
   { key: "step3" as const, icon: Hand, step: "03" },
 ];
 
-type PageProps = { params: Promise<{ locale: string }> };
-
-export default async function Page({ params }: PageProps): Promise<ReactNode> {
-  const { locale } = await params;
-
-  setRequestLocale(locale);
-
-  const t = await getTranslations();
+export default function Page(): ReactNode {
+  const t = useTranslations();
 
   return (
     <main className="min-h-dvh">
       {/* Hero */}
-      <section className="overflow-hidden border-b border-border">
-        <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 pt-16 pb-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-8 lg:pt-24 lg:pb-28">
-          <div className="min-w-0">
-            <div className="mb-8 flex flex-wrap items-center gap-2">
-              {["CBZ", "CBR", t("Hero.chipFolder")].map((chip) => (
-                <span
-                  className="border border-rule px-3 py-1 font-mono text-xs tracking-wider text-text-1 uppercase"
-                  key={chip}
-                >
-                  {chip}
-                </span>
-              ))}
-            </div>
-            <h1 className="font-display text-6xl leading-[0.9] font-bold tracking-[-0.03em] text-text-1 sm:text-7xl lg:text-8xl">
-              Mekuri
-            </h1>
-            <p className="mt-4 font-mono text-base tracking-[0.5em] text-accent">
-              {t("Hero.kana")}
-            </p>
-            <p className="mt-8 max-w-md font-display text-2xl leading-snug font-medium text-text-1">
-              {t("Hero.tagline")}
-            </p>
-            <p className="mt-4 max-w-md text-base leading-relaxed text-text-2">
-              {t("Hero.description")}
-            </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <a
-                className="inline-flex items-center justify-center gap-2 bg-rule px-6 py-3.5 text-base font-semibold text-bg transition-colors hover:bg-accent"
-                href={RELEASE_URL}
-              >
-                <Download size={18} strokeWidth={2} />
-                {t("Hero.download")}
-              </a>
-              <a
-                className="inline-flex items-center justify-center gap-2 border border-rule px-6 py-3.5 text-base font-semibold text-text-1 transition-colors hover:bg-bg-elevated"
-                href={GITHUB_URL}
-              >
-                <Github size={18} strokeWidth={2} />
-                {t("Hero.viewOnGithub")}
-              </a>
-            </div>
-            <p className="mt-6 font-mono text-xs tracking-wider text-text-3">
-              {t("Hero.badge")}
-            </p>
+      <section className="relative px-6 pt-20 pb-28 text-center">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute top-[-200px] left-1/2 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-accent/10 blur-[150px]" />
+        </div>
+        <div className="relative mx-auto max-w-2xl">
+          <Image
+            src="/icon.png"
+            alt="Mekuri"
+            width={128}
+            height={128}
+            className="mx-auto mb-8 rounded-[24px] shadow-2xl shadow-accent/20"
+            priority
+          />
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm font-medium text-accent">
+            <Monitor size={16} strokeWidth={1.75} />
+            {t("Hero.badge")}
           </div>
-
-          {/* 実際の見開き。同種の漫画リーダーはどれも本物のコマを見せていて、
-              描き起こした絵より実物のほうが強い */}
-          <div className="min-w-0">
-            <Image
-              alt={t("screens.spread")}
-              className="w-full"
-              height={1600}
-              priority={true}
-              src="/screenshot-spread.png"
-              width={2400}
-            />
+          <h1 className="mb-3 text-5xl font-bold tracking-tight text-text-1 sm:text-6xl">
+            Mekuri
+          </h1>
+          <p className="mb-4 text-xl font-medium text-text-2 sm:text-2xl">
+            {t("Hero.tagline")}
+          </p>
+          <p className="mx-auto mb-10 max-w-lg text-base leading-relaxed text-text-3">
+            {t("Hero.description")}
+          </p>
+          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <a
+              href={RELEASE_URL}
+              className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-base font-semibold text-white shadow-lg shadow-accent/25 transition-all hover:-translate-y-0.5 hover:bg-accent-dark hover:shadow-xl hover:shadow-accent/30"
+            >
+              <Download size={18} strokeWidth={2} />
+              {t("Hero.download")}
+            </a>
+            <a
+              href={GITHUB_URL}
+              className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-6 py-3 text-base font-semibold text-text-1 transition-all hover:-translate-y-0.5 hover:border-text-3 hover:shadow-md hover:shadow-black/20"
+            >
+              <GithubMark size={18} />
+              {t("Hero.viewOnGithub")}
+            </a>
           </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="border-b border-border px-6 py-20">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="mb-12 font-mono text-xs font-semibold tracking-wider text-accent">
+      <section className="relative px-6 py-20">
+        <div className="pointer-events-none absolute inset-0 bg-bg-elevated" />
+        <div className="relative mx-auto max-w-4xl">
+          <h2 className="mb-14 text-center text-sm font-semibold tracking-widest text-text-3 uppercase">
             {t("HowItWorks.title")}
           </h2>
-          <div className="grid gap-10 sm:grid-cols-3 sm:gap-0">
+          <div className="grid gap-8 sm:grid-cols-3">
             {STEPS.map(({ key, icon: Icon, step }) => (
-              <div
-                className="sm:border-l sm:border-border sm:px-7 sm:first:border-l-0 sm:first:pl-0"
-                key={key}
-              >
-                <div className="mb-5 flex items-baseline gap-3">
-                  <span className="font-mono text-4xl font-bold text-accent">
-                    {step}
-                  </span>
-                  <Icon
-                    className="text-text-3"
-                    size={20}
-                    strokeWidth={1.75}
-                  />
+              <div key={key} className="text-center">
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10">
+                  <Icon size={24} strokeWidth={1.75} className="text-accent" />
                 </div>
-                <h3 className="mb-2 font-display text-lg font-semibold text-text-1">
+                <span className="mb-2 block font-mono text-xs font-bold tracking-wider text-text-3">
+                  STEP {step}
+                </span>
+                <h3 className="mb-2 text-lg font-semibold text-text-1">
                   {t(`HowItWorks.${key}.title`)}
                 </h3>
                 <p className="text-sm leading-relaxed text-text-2">
@@ -147,42 +118,43 @@ export default async function Page({ params }: PageProps): Promise<ReactNode> {
       {/* Features */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-5xl">
-          <h2 className="mb-12 font-mono text-xs font-semibold tracking-wider text-accent">
+          <h2 className="mb-12 text-center text-sm font-semibold tracking-widest text-text-3 uppercase">
             {t("Features.title")}
           </h2>
-          <dl className="grid border-t border-border sm:grid-cols-2">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {FEATURES.map(({ key, icon: Icon }) => (
               <div
-                className="border-b border-border py-7 sm:odd:border-r sm:odd:pr-8 sm:even:pl-8"
                 key={key}
+                className="rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-0.5 hover:border-text-3 hover:shadow-lg hover:shadow-black/20"
               >
-                <dt className="mb-2 flex items-center gap-2.5 text-base font-semibold text-text-1">
-                  <Icon
-                    className="text-accent"
-                    size={18}
-                    strokeWidth={1.75}
-                  />
+                <div className="mb-4 inline-flex rounded-xl bg-accent/10 p-2.5">
+                  <Icon size={20} strokeWidth={1.75} className="text-accent" />
+                </div>
+                <h3 className="mb-2 text-base font-semibold text-text-1">
                   {t(`Features.${key}.title`)}
-                </dt>
-                <dd className="text-sm leading-relaxed text-text-2">
+                </h3>
+                <p className="text-sm leading-relaxed text-text-2">
                   {t(`Features.${key}.description`)}
-                </dd>
+                </p>
               </div>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-rule px-6 py-24 text-bg">
-        <div className="mx-auto max-w-2xl">
-          <h2 className="font-display text-4xl leading-tight font-bold tracking-tight">
+      <section className="relative px-6 py-24">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute bottom-[-100px] left-1/2 h-[400px] w-[700px] -translate-x-1/2 rounded-full bg-accent/8 blur-[120px]" />
+        </div>
+        <div className="relative mx-auto max-w-xl text-center">
+          <h2 className="mb-3 text-3xl font-bold tracking-tight text-text-1">
             {t("CTA.title")}
           </h2>
-          <p className="mt-4 text-base text-bg/70">{t("CTA.description")}</p>
+          <p className="mb-8 text-base text-text-2">{t("CTA.description")}</p>
           <a
-            className="mt-9 inline-flex items-center gap-2 bg-bg px-6 py-3.5 text-base font-semibold text-text-1 transition-colors hover:bg-accent hover:text-bg"
             href={RELEASE_URL}
+            className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-base font-semibold text-white shadow-lg shadow-accent/25 transition-all hover:-translate-y-0.5 hover:bg-accent-dark hover:shadow-xl hover:shadow-accent/30"
           >
             <Download size={18} strokeWidth={2} />
             {t("CTA.download")}
@@ -191,39 +163,32 @@ export default async function Page({ params }: PageProps): Promise<ReactNode> {
       </section>
 
       {/* Footer */}
-      <footer className="px-6 py-8">
+      <footer className="border-t border-border px-6 py-8">
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 sm:flex-row sm:justify-between">
           <span className="text-sm text-text-3">
             {t("Footer.madeBy")}{" "}
             <a
-              className="font-medium text-text-2 transition-colors hover:text-accent"
               href={GITHUB_URL}
+              className="font-medium text-text-2 transition-colors hover:text-accent"
             >
               piro0919
             </a>
           </span>
           <div className="flex items-center gap-5">
             <a
-              className="inline-flex items-center gap-1.5 text-sm text-text-3 transition-colors hover:text-accent"
               href={GITHUB_URL}
+              className="inline-flex items-center gap-1.5 text-sm text-text-3 transition-colors hover:text-accent"
             >
-              <Github size={14} strokeWidth={1.75} />
+              <GithubMark size={14} />
               {t("Footer.openSource")}
             </a>
             <a
-              className="inline-flex items-center gap-1.5 text-sm text-text-3 transition-colors hover:text-accent"
               href={COFFEE_URL}
+              className="inline-flex items-center gap-1.5 text-sm text-text-3 transition-colors hover:text-accent"
             >
               <Coffee size={14} strokeWidth={1.75} />
               {t("Footer.buyMeACoffee")}
             </a>
-            <Link
-              className="inline-flex items-center gap-1.5 text-sm text-text-3 transition-colors hover:text-accent"
-              href="/privacy"
-            >
-              <Shield size={14} strokeWidth={1.75} />
-              {t("Footer.privacy")}
-            </Link>
           </div>
         </div>
       </footer>

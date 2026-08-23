@@ -30,7 +30,7 @@ export default async function OgImage({
      ものを同梱している。文言を変えたら assets/README.md の手順で作り直す */
   const [icon, font] = await Promise.all([
     readFile(join(process.cwd(), "public/icon.png")),
-    readFile(join(process.cwd(), "assets/ZenKakuGothicNew-Black-subset.ttf")),
+    readFile(join(process.cwd(), "assets/ZenKakuGothicNew-Medium-subset.ttf")),
   ]);
   const iconSrc = `data:image/png;base64,${icon.toString("base64")}`;
 
@@ -53,7 +53,6 @@ export default async function OgImage({
           style={{
             color: PAPER,
             fontSize: 128,
-            fontWeight: 700,
             letterSpacing: -3,
           }}
         >
@@ -69,7 +68,7 @@ export default async function OgImage({
     {
       ...size,
       fonts: [
-        { data: font, name: "Zen Kaku Gothic New", style: "normal", weight: 900 },
+        { data: font, name: "Zen Kaku Gothic New", style: "normal", weight: 500 },
       ],
     },
   );

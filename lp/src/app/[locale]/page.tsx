@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   ArrowLeftRight,
   Coffee,
@@ -16,7 +17,6 @@ import {
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
-import { InkSpread } from "./ink-spread";
 
 const GITHUB_URL = "https://github.com/piro0919/mekuri";
 const RELEASE_URL = "https://github.com/piro0919/mekuri/releases/latest";
@@ -95,10 +95,17 @@ export default async function Page({ params }: PageProps): Promise<ReactNode> {
             </p>
           </div>
 
-          {/* 紙面は右端で裁ち落とす。全体を収めると他と同じ「中央に置いた
-              スクリーンショット」に戻ってしまう */}
-          <div className="-mr-16 min-w-0 rotate-[-2deg] sm:-mr-20 lg:-mr-28">
-            <InkSpread />
+          {/* 実際の見開き。同種の漫画リーダーはどれも本物のコマを見せていて、
+              描き起こした絵より実物のほうが強い */}
+          <div className="min-w-0">
+            <Image
+              alt={t("screens.spread")}
+              className="w-full"
+              height={1600}
+              priority={true}
+              src="/screenshot-spread.png"
+              width={2400}
+            />
           </div>
         </div>
       </section>

@@ -92,5 +92,8 @@
       }
     ],
     "back": "Back to Mekuri"
+  },
+  "screens": {
+    "spread": "A spread open in Mekuri"
   }
 }

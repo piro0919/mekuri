@@ -92,5 +92,8 @@
       }
     ],
     "back": "Mekuri に戻る"
+  },
+  "screens": {
+    "spread": "見開きで開いた Mekuri の画面"
   }
 }

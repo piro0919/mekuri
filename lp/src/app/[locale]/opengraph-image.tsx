@@ -40,25 +40,25 @@ export default async function OgImage({
         alignItems: "center",
         background: INK,
         display: "flex",
-        gap: 64,
+        gap: 56,
         height: "100%",
-        padding: "0 90px",
+        justifyContent: "center",
         width: "100%",
       }}
     >
       {/* biome-ignore lint/performance/noImgElement: next/image is not available in ImageResponse */}
-      <img alt="" height={300} src={iconSrc} width={300} />
+      <img alt="" height={230} src={iconSrc} width={230} />
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div
           style={{
             color: PAPER,
-            fontSize: 128,
+            fontSize: 112,
             letterSpacing: -3,
           }}
         >
           Mekuri
         </div>
-        <div style={{ color: ACCENT, display: "flex", fontSize: 38, marginTop: 18 }}>
+        <div style={{ color: ACCENT, display: "flex", fontSize: 34, marginTop: 14 }}>
           {isJa
             ? "漫画を、美しく読む。"
             : "Your comics, beautifully read."}

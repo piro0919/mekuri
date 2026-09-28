@@ -1,7 +1,7 @@
 {
   "Metadata": {
-    "title": "Mekuri",
-    "description": "macOS向けの軽量ローカル漫画・コミックリーダー。CBZ、CBR、画像フォルダに対応。"
+    "title": "Mekuri — NeeView の代わりに使える Mac の漫画ビューア",
+    "description": "NeeView や Honeyview は Windows 専用です。Mekuri は CBZ・CBR・画像フォルダを開ける macOS 向けの軽い漫画ビューアで、見開きと右綴じに対応します。無料・オープンソースです。"
   },
   "Hero": {
     "badge": "macOS コミックリーダー",

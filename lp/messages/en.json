@@ -1,7 +1,7 @@
 {
   "Metadata": {
-    "title": "Mekuri",
-    "description": "A lightweight local comic and manga reader for macOS. Open CBZ, CBR, and image folders."
+    "title": "Mekuri — a CDisplayEx alternative for Mac",
+    "description": "CDisplayEx and Honeyview are Windows only. Mekuri is a lightweight comic and manga reader for macOS that opens CBZ, CBR, and image folders, with two-page spreads and right-to-left reading. Free and open source."
   },
   "Hero": {
     "badge": "macOS Comic Reader",

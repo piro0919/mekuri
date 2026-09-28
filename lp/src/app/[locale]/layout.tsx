@@ -49,7 +49,7 @@ export async function generateMetadata({
     description: t("description"),
     title: {
       default: t("title"),
-      template: `%s | ${t("title")}`,
+      template: "%s | Mekuri",
     },
     metadataBase: new URL("https://mekuri.kkweb.io"),
     icons: {

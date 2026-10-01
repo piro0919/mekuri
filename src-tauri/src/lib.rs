@@ -177,15 +177,19 @@ async fn check_for_updates(app: tauri::AppHandle) {
                 .message("アップデートが完了しました。\nアプリを自動で再起動します。")
                 .title("アップデート")
                 .blocking_show();
-            // Relaunch via `open` command as workaround for Tauri macOS restart bug
+            // Relaunch via `open` command as workaround for Tauri macOS restart bug.
+            // The bundle path goes in as its own argument, never through a
+            // shell, so a path containing `'` or spaces still opens. `-n`
+            // starts a fresh instance even though this one has not exited
+            // yet — that is what the old `sleep 1` before `open` was for.
             if let Ok(path) = std::env::current_exe() {
                 if let Some(app_bundle) = path
                     .ancestors()
                     .find(|p| p.extension().is_some_and(|ext| ext == "app"))
                 {
-                    let _ = std::process::Command::new("sh")
-                        .arg("-c")
-                        .arg(format!("sleep 1 && open '{}'", app_bundle.display()))
+                    let _ = std::process::Command::new("open")
+                        .arg("-n")
+                        .arg(app_bundle)
                         .spawn();
                 }
             }

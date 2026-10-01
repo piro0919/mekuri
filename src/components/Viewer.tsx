@@ -230,7 +230,7 @@ export function Viewer({
 				>
 					{leftData && (
 						<img
-							src={leftData.data_url}
+							src={leftData.src}
 							alt={leftData.filename}
 							style={{
 								maxHeight: "100%",
@@ -242,7 +242,7 @@ export function Viewer({
 					)}
 					{rightData && (
 						<img
-							src={rightData.data_url}
+							src={rightData.src}
 							alt={rightData.filename}
 							style={{
 								maxHeight: "100%",
@@ -258,7 +258,7 @@ export function Viewer({
 
 		return (
 			<img
-				src={currentPageData.data_url}
+				src={currentPageData.src}
 				alt={currentPageData.filename}
 				style={{
 					maxHeight: "100%",

@@ -1,7 +1,7 @@
-use std::path::Path;
 use std::sync::Mutex;
+use tauri::http::{header, Response, StatusCode};
 use tauri::menu::{Menu, MenuItem, PredefinedMenuItem, Submenu};
-use tauri::Emitter;
+use tauri::{Emitter, Manager};
 use tauri_plugin_dialog::{DialogExt, MessageDialogButtons};
 use tauri_plugin_updater::UpdaterExt;
 
@@ -20,44 +20,49 @@ fn take_pending_open() -> Option<String> {
     PENDING_OPEN.lock().ok()?.take()
 }
 
+// Async so a slow listing, or waiting on a RAR pass for the previous
+// comic, does not hold up the main thread.
 #[tauri::command]
-fn open_comic_meta(path: String) -> Result<archive::ComicMeta, String> {
-    let p = Path::new(&path);
-
-    if p.is_dir() {
-        return archive::list_images_in_dir(&path);
-    }
-
-    match p
-        .extension()
-        .and_then(|e| e.to_str())
-        .map(|e| e.to_lowercase())
-        .as_deref()
-    {
-        Some("cbz" | "zip") => archive::list_cbz(&path),
-        Some("cbr" | "rar") => archive::list_cbr(&path),
-        _ => Err(format!("Unsupported file format: {}", path)),
-    }
+async fn open_comic_meta(
+    path: String,
+    store: tauri::State<'_, archive::ComicStore>,
+) -> Result<archive::ComicMeta, String> {
+    store.open(&path)
 }
 
-#[tauri::command]
-fn get_page(path: String, index: usize, filename: String) -> Result<archive::ComicPage, String> {
-    let p = Path::new(&path);
+/// Answer a `mekuri://localhost/page/<generation>/<index>` request with the
+/// page's raw bytes. The URL never changes for a given page of a given open,
+/// so the webview may keep it as long as it likes.
+fn page_response(store: &archive::ComicStore, path: &str) -> Response<Vec<u8>> {
+    let result = match archive::parse_page_path(path) {
+        Some((generation, index)) => store.page(generation, index),
+        None => Err(archive::PageError::NotFound),
+    };
+    let builder = Response::builder().header(header::ACCESS_CONTROL_ALLOW_ORIGIN, "*");
 
-    if p.is_dir() {
-        return archive::get_page_from_dir(&path, index, &filename);
-    }
-
-    match p
-        .extension()
-        .and_then(|e| e.to_str())
-        .map(|e| e.to_lowercase())
-        .as_deref()
-    {
-        Some("cbz" | "zip") => archive::get_page_from_cbz(&path, index, &filename),
-        Some("cbr" | "rar") => archive::get_page_from_cbr(&path, index, &filename),
-        _ => Err(format!("Unsupported file format: {}", path)),
-    }
+    let built = match result {
+        Ok(page) => builder
+            .status(StatusCode::OK)
+            .header(header::CONTENT_TYPE, page.mime)
+            .header(header::CACHE_CONTROL, "max-age=31536000, immutable")
+            .body(page.bytes),
+        Err(err) => {
+            let status = match err {
+                archive::PageError::Stale => StatusCode::GONE,
+                archive::PageError::NotFound => StatusCode::NOT_FOUND,
+                archive::PageError::Failed(message) => {
+                    eprintln!("Failed to serve {}: {}", path, message);
+                    StatusCode::INTERNAL_SERVER_ERROR
+                }
+            };
+            builder.status(status).body(Vec::new())
+        }
+    };
+    built.unwrap_or_else(|_| {
+        let mut response = Response::new(Vec::new());
+        *response.status_mut() = StatusCode::INTERNAL_SERVER_ERROR;
+        response
+    })
 }
 
 fn build_menu(app: &tauri::AppHandle) -> tauri::Result<Menu<tauri::Wry>> {
@@ -209,6 +214,17 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
+        .manage(archive::ComicStore::default())
+        .register_asynchronous_uri_scheme_protocol("mekuri", |ctx, request, responder| {
+            let app = ctx.app_handle().clone();
+            let path = request.uri().path().to_string();
+            // Reading a page can mean a pass over a RAR archive, so keep it
+            // off the thread that delivered the request.
+            tauri::async_runtime::spawn_blocking(move || {
+                let store = app.state::<archive::ComicStore>();
+                responder.respond(page_response(&store, &path));
+            });
+        })
         .menu(|app| build_menu(app))
         .on_menu_event(|app, event| {
             let id = event.id().as_ref();
@@ -226,11 +242,7 @@ pub fn run() {
             });
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![
-            open_comic_meta,
-            get_page,
-            take_pending_open
-        ])
+        .invoke_handler(tauri::generate_handler![open_comic_meta, take_pending_open])
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
         .run(|app, event| {

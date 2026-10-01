@@ -14,8 +14,8 @@ macOS向けの軽量ローカル漫画/コミックリーダー。CBZ/CBR/画像
 
 ### Rust Backend (`src-tauri/src/`)
 
-- `lib.rs` — メイン: Builder, plugin登録, Tauriコマンド定義 (`open_comic`, `get_comic_info`)
-- `archive.rs` — CBZ/CBR/画像フォルダからの画像抽出。画像をBase64 data URLに変換してフロントエンドに渡す
+- `lib.rs` — メイン: Builder, plugin登録, Tauriコマンド定義 (`open_comic_meta`), `mekuri:` URIスキームの登録
+- `archive.rs` — CBZ/CBR/画像フォルダからの画像抽出。開いたコミックを `ComicStore` に保持し、ページのバイト列を返す
 
 ### Frontend (`src/`)
 
@@ -29,7 +29,8 @@ macOS向けの軽量ローカル漫画/コミックリーダー。CBZ/CBR/画像
 
 ## Key Design Decisions
 
-- **Base64 data URL方式**: アーカイブ内の画像をBase64エンコードしてフロントエンドに渡す。Tauri asset protocolより実装がシンプル
+- **`mekuri:` URIスキーム**: ページ画像は `mekuri://localhost/page/<generation>/<index>`（Windows/Android では `http://mekuri.localhost/...`）で生のバイト列のまま配る。Base64 で IPC に載せると 33% 膨らむため。generation はコミックを開くたびに変わり、前のコミックの画像が出ることはない
+- **アーカイブは開いたまま保持**: CBZ は ZipArchive を保持してページごとに読む。CBR は先頭から順にしか読めないため、一覧は開いたときに一度だけ作り、未取得のページを要求されたら前後の数ページをまとめて1回の走査で取り出し、件数上限つきでメモリに置く
 - **ダークテーマ固定**: 漫画リーダーとして背景は暗い方が読みやすいため
 - **RTLデフォルト**: 日本の漫画が主な用途のため右から左がデフォルト
 - **localStorage使用**: 設定と履歴はlocalStorageに保存。tauri-plugin-storeは将来の拡張用に依存に含めている

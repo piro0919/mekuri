@@ -1,7 +1,7 @@
 export type ComicPage = {
 	index: number;
 	filename: string;
-	data_url: string;
+	src: string;
 	width: number;
 	height: number;
 };
@@ -9,6 +9,7 @@ export type ComicPage = {
 export type ComicMeta = {
 	filenames: string[];
 	page_count: number;
+	generation: number;
 };
 
 export type ReadingDirection = "rtl" | "ltr";

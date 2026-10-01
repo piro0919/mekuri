@@ -225,7 +225,7 @@ pub fn run() {
                 responder.respond(page_response(&store, &path));
             });
         })
-        .menu(|app| build_menu(app))
+        .menu(build_menu)
         .on_menu_event(|app, event| {
             let id = event.id().as_ref();
             match id {

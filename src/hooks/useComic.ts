@@ -27,6 +27,11 @@ export function useComic() {
 	const [error, setError] = useState<string | null>(null);
 	const [filePath, setFilePath] = useState<string | null>(null);
 	const [pageCache, setPageCache] = useState<Map<number, ComicPage>>(new Map());
+	// Pages that failed to load, so the viewer can say so instead of
+	// showing "Loading..." forever. Cleared when a retry succeeds.
+	const [pageErrors, setPageErrors] = useState<Map<number, string>>(
+		new Map(),
+	);
 	const fetchingRef = useRef<Set<number>>(new Set());
 	const filenamesRef = useRef<string[]>([]);
 	// Which open of the backend the page URLs belong to; null when closed.
@@ -49,6 +54,18 @@ export function useComic() {
 				}
 			}
 
+			return next;
+		});
+	}, []);
+
+	const setPageError = useCallback((index: number, message: string | null) => {
+		setPageErrors((prev) => {
+			if (message === null ? !prev.has(index) : prev.get(index) === message) {
+				return prev;
+			}
+			const next = new Map(prev);
+			if (message === null) next.delete(index);
+			else next.set(index, message);
 			return next;
 		});
 	}, []);
@@ -77,13 +94,16 @@ export function useComic() {
 				// Another comic was opened while this page was loading.
 				if (generationRef.current !== generation) return;
 				storePage({ index, filename, src, width, height });
+				setPageError(index, null);
 			} catch (e) {
 				console.error(`Failed to load page ${index}:`, e);
+				if (generationRef.current !== generation) return;
+				setPageError(index, `Failed to load page ${index + 1}`);
 			} finally {
 				fetching.delete(index);
 			}
 		},
-		[storePage],
+		[storePage, setPageError],
 	);
 
 	const prefetchAround = useCallback(
@@ -112,6 +132,7 @@ export function useComic() {
 			setLoading(true);
 			setError(null);
 			setPageCache(new Map());
+			setPageErrors(new Map());
 			fetchingRef.current = new Set();
 			filenamesRef.current = [];
 			generationRef.current = null;
@@ -163,10 +184,26 @@ export function useComic() {
 		setFilePath(null);
 		setError(null);
 		setPageCache(new Map());
+		setPageErrors(new Map());
 		fetchingRef.current = new Set();
 		filenamesRef.current = [];
 		generationRef.current = null;
 	}, []);
+
+	// An <img> failed to show a page that had already loaded once. Drop it
+	// from the cache so the next prefetch around it tries again.
+	const reportPageError = useCallback(
+		(index: number) => {
+			setPageCache((prev) => {
+				if (!prev.has(index)) return prev;
+				const next = new Map(prev);
+				next.delete(index);
+				return next;
+			});
+			setPageError(index, `Failed to load page ${index + 1}`);
+		},
+		[setPageError],
+	);
 
 	const goTo = useCallback(
 		(page: number) => {
@@ -207,7 +244,10 @@ export function useComic() {
 
 	const currentPageData = pageCache.get(currentPage) ?? null;
 	const nextPageData = pageCache.get(currentPage + 1) ?? null;
-	const isPageLoading = !currentPageData;
+	const currentPageError = currentPageData
+		? null
+		: (pageErrors.get(currentPage) ?? null);
+	const isPageLoading = !currentPageData && !currentPageError;
 
 	return useMemo(
 		() => ({
@@ -218,12 +258,14 @@ export function useComic() {
 			filePath,
 			currentPageData,
 			nextPageData,
+			currentPageError,
 			isPageLoading,
 			load,
 			close,
 			goTo,
 			next,
 			prev,
+			reportPageError,
 		}),
 		[
 			pageCount,
@@ -233,12 +275,14 @@ export function useComic() {
 			filePath,
 			currentPageData,
 			nextPageData,
+			currentPageError,
 			isPageLoading,
 			load,
 			close,
 			goTo,
 			next,
 			prev,
+			reportPageError,
 		],
 	);
 }

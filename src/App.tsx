@@ -219,11 +219,13 @@ function App() {
 				currentPage={comic.currentPage}
 				currentPageData={comic.currentPageData}
 				nextPageData={comic.nextPageData}
+				currentPageError={comic.currentPageError}
 				direction={settings.direction}
 				viewMode={settings.viewMode}
 				onNext={comic.next}
 				onPrev={comic.prev}
 				onGoTo={comic.goTo}
+				onPageError={comic.reportPageError}
 				onClose={comic.close}
 				onDirectionChange={settings.setDirection}
 				onViewModeChange={settings.setViewMode}

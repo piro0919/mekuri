@@ -6,11 +6,13 @@ type Props = {
 	currentPage: number;
 	currentPageData: ComicPage | null;
 	nextPageData: ComicPage | null;
+	currentPageError: string | null;
 	direction: ReadingDirection;
 	viewMode: ViewMode;
 	onNext: (step?: number) => void;
 	onPrev: (step?: number) => void;
 	onGoTo: (page: number) => void;
+	onPageError: (index: number) => void;
 	onClose: () => void;
 	onDirectionChange: (dir: ReadingDirection) => void;
 	onViewModeChange: (mode: ViewMode) => void;
@@ -25,11 +27,13 @@ export function Viewer({
 	currentPage,
 	currentPageData,
 	nextPageData,
+	currentPageError,
 	direction,
 	viewMode,
 	onNext,
 	onPrev,
 	onGoTo,
+	onPageError,
 	onClose,
 	onDirectionChange,
 	onViewModeChange,
@@ -206,6 +210,14 @@ export function Viewer({
 	);
 
 	const renderPages = () => {
+		if (!currentPageData && currentPageError) {
+			return (
+				<div role="alert" style={{ color: "#FF453A", fontSize: 14 }}>
+					{currentPageError}
+				</div>
+			);
+		}
+
 		if (!currentPageData) {
 			return (
 				<div style={{ color: "var(--text-secondary)", fontSize: 14 }}>
@@ -232,6 +244,7 @@ export function Viewer({
 						<img
 							src={leftData.src}
 							alt={leftData.filename}
+							onError={() => onPageError(leftData.index)}
 							style={{
 								maxHeight: "100%",
 								maxWidth: "50%",
@@ -244,6 +257,7 @@ export function Viewer({
 						<img
 							src={rightData.src}
 							alt={rightData.filename}
+							onError={() => onPageError(rightData.index)}
 							style={{
 								maxHeight: "100%",
 								maxWidth: "50%",
@@ -260,6 +274,7 @@ export function Viewer({
 			<img
 				src={currentPageData.src}
 				alt={currentPageData.filename}
+				onError={() => onPageError(currentPageData.index)}
 				style={{
 					maxHeight: "100%",
 					maxWidth: "100%",

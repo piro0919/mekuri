@@ -68,10 +68,12 @@ fn into_meta(mut names: Vec<String>) -> ComicMeta {
 }
 
 fn list_cbz(archive: &zip::ZipArchive<File>) -> Vec<String> {
+    // zip 9 decodes the name on demand and returns a Result. An entry whose
+    // name can't be decoded can't be opened by name either, so skip it.
     (0..archive.len())
-        .filter_map(|i| archive.name_for_index(i))
+        .filter_map(|i| archive.name_for_index(i)?.ok())
         .filter(|n| is_image_file(n))
-        .map(str::to_string)
+        .map(|n| n.into_owned())
         .collect()
 }
 
